@@ -1,0 +1,26 @@
+# Custom configuration for MongoDB and Webflux Server port
+
+mongodbDatabase: orderProcessing
+mongodbUri: "mongodb://127.0.0.1:27017"
+
+apiPort: 9898
+
+# Disabling auto-configuration connection so we can define it programmatically
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration
+
+# Default settings (used if Actuator or other spring components need a server context)
+# We will override Netty Reactive port programmatically later using apiPort
+server:
+  port: 9897
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
